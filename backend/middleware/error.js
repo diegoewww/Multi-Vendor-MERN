@@ -11,24 +11,24 @@ module.exports = (err, req, res, next) => {
   }
 
   // Duplicate key error
-  if (err.code === 1100) {
+  if (err.code === 11000) {
     const message = `Duplicate key ${Object.keys(err.keyValue)} Entered`
     err = new ErrorHandler(message, 400)
   }
 
-  // Wrong jwt error
+  // wrong jwt error
   if (err.name === 'JsonWebTokenError') {
-    const message = 'Your url is invalid please try again later'
+    const message = 'Your url is invalid please try again letter'
     err = new ErrorHandler(message, 400)
   }
 
   // jwt expired
   if (err.name === 'TokenExpiredError') {
-    const message = 'Your Url is expired please try again later'
+    const message = 'Your Url is expired please try again letter!'
     err = new ErrorHandler(message, 400)
   }
 
-  res.statusCode(err.statusCode).json({
+  res.status(err.statusCode).json({
     success: false,
     message: err.message
   })
